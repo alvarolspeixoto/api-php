@@ -69,6 +69,7 @@ class User
         if ($stmt->rowCount() > 0) {
             return 'Usuário inserido com sucesso!';
         } else {
+            #TODO: descobrir porque esse erro não aparece corretamente
             throw new \Exception("Falha ao inserir usuário!");
         }
     }
