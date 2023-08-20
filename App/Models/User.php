@@ -49,4 +49,27 @@ class User
             throw new \Exception("Nenhum usuário encontrado!");
         }
     }
+
+    public static function insert($data)
+    {
+        $connPDO = new \PDO(
+            DBDRIVE . ': host=' . DBHOST . '; dbname=' . DBNAME,
+            DBUSER,
+            DBPASS
+        );
+
+        $sql = 'INSERT INTO '. self::$table.
+               ' VALUES (:cpf, :name, :birthdate)';
+        $stmt = $connPDO->prepare($sql);
+        $stmt->bindValue(':cpf', $data['cpf']);
+        $stmt->bindValue(':name', $data['name']);
+        $stmt->bindValue(':birthdate', $data['birthdate']);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return 'Usuário inserido com sucesso!';
+        } else {
+            throw new \Exception("Falha ao inserir usuário!");
+        }
+    }
 }
